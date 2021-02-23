@@ -1,9 +1,28 @@
-const Issues = (props) => {
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const RepoWrapper = styled.div`
+  margin: 5px;
+  padding: 5px;
+  min-height: 100px;
+  border-bottom: 1px solid gray;
+`;
+
+const NavLink = styled(Link)`
+  color: blue;
+  font-size: larger;
+  text-decoration: none;
+  font-weight: bolder;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+const Repository = ({ name }) => {
   return (
-    <div>
-      <h3>{props.name}'s Issues</h3>
-    </div>
+    <RepoWrapper>
+      <NavLink to={`/repositories/${name}`}>{name}</NavLink>
+    </RepoWrapper>
   );
 };
 
-export default Issues;
+export default Repository;

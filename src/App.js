@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Link, Switch, BrowserRouter } from "react-router-dom";
+import Login from "./pages/Login";
+import Repositories from "./pages/Repositories";
+import Issues from "./pages/Issues";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div>
+        <h1 className="mainTitle">Git Issues App</h1>
+
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/repositories/:name" component={Issues} />
+          <Route path="/repositories" component={Repositories} />
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
