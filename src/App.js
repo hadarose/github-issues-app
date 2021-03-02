@@ -1,7 +1,9 @@
-import { Route, Link, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
+import CompleteGitHubAuth from "./pages/CompleteGitHubAuth";
 import Repositories from "./pages/Repositories";
 import Issues from "./pages/Issues";
+import Description from "./pages/Description";
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
 
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/repositories/:name" component={Issues} />
+          <Route path="/code" component={CompleteGitHubAuth} />
+          <Route path="/repositories/:owner/:name/issues" component={Issues} />
+          <Route path="/repositories/:name" component={Description} />
           <Route path="/repositories" component={Repositories} />
         </Switch>
       </div>

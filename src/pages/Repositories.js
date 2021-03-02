@@ -1,89 +1,80 @@
 import Repository from "./Repository";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
+import { getRepositories } from "../shared/fetch-from-server";
+import {
+  Container,
+  SearchContainer,
+  SearchBox,
+  AddNewButton,
+} from "../shared/styles";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const SearchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  min-height: 50px;
-`;
-
-const SearchBox = styled.input`
-  flex: 1;
-  margin-right: 10px;
-  border-radius: 5px;
-  border: 0.75px solid gray;
-  padding: 20px;
-`;
-
-const NewButton = styled.button`
-  background-color: green;
-  color: white;
-  min-width: 75px;
-  font-size: medium;
-`;
 const Repositories = () => {
-  const [token, setToken] = useState(null);
+  const [token] = useState(localStorage.getItem("token"));
   const [repositories, setRepositories] = useState([
-    { id: 1, name: "repository-no-1", issues: [1, 2, 3, 4, 5] },
-    { id: 2, name: "repository-no-2", issues: [1, 2, 3, 4, 5] },
-    { id: 3, name: "repository-no-3", issues: [1, 2, 3, 4, 5] },
+    {
+      id: 1,
+      name: "repository-no-1",
+      owner: "",
+    },
+    {
+      id: 2,
+      name: "repository-no-2",
+      owner: "",
+    },
+    {
+      id: 3,
+      name: "repository-no-3",
+      owner: "",
+    },
   ]);
 
-  const userLoginCode = window.location.href.match(/\?code=(.*)/)[1];
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/authenticate/" + userLoginCode)
-      .then((data) => {
-        console.log("what is the token? ", data.data.token);
-        setToken(data.data.token);
-      });
-  }, []);
+  const [displayedRepos, setDisplayedRepos] = useState(repositories);
 
   useEffect(() => {
     if (token === null) {
       return;
     }
-
-    axios
-      .get("https://api.github.com/user/repos", {
-        headers: {
-          Authorization: "token " + token,
-          Accept: "application/vnd.github.v3+json",
-        },
-      })
-      .then((data) => {
-        console.log("did I get something? ", data);
-        setRepositories(data.data);
-      });
+    getRepositories(token).then((data) => setRepositories(data.data));
   }, [token]);
+
+  useEffect(() => {
+    if (repositories) {
+      setDisplayedRepos(repositories);
+    }
+  }, [repositories]);
+
+  const filterReposByRepoName = (repoName) => {
+    const filteredResults = repositories.filter((repo) =>
+      repo.name.toLowerCase().includes(repoName.toLowerCase())
+    );
+
+    setDisplayedRepos(filteredResults);
+  };
 
   return (
     <Container>
       <h2>Git Repositories</h2>
       <SearchContainer>
-        <SearchBox defaultValue="find a repository..." />
-        <NewButton>new</NewButton>
+        <SearchBox
+          defaultValue="find a repository..."
+          onChange={({ target }) => filterReposByRepoName(target.value)}
+        />
+        <AddNewButton>new</AddNewButton>
       </SearchContainer>
 
-      {repositories.map((repo) => (
-        <Repository key={repo.id} name={repo.name} />
-      ))}
-
-      <button onClick={() => console.log("token is ", token)}>
-        Check token
-      </button>
-      <button onClick={() => console.log("repos are ", repositories)}>
-        Check repos
-      </button>
+      {displayedRepos.length > 0 ? (
+        <div>
+          {displayedRepos.map((repo) => (
+            <Repository
+              key={repo.id}
+              name={repo.name}
+              owner={repo.owner.login}
+            />
+          ))}
+        </div>
+      ) : (
+        <h2>Sorry, didn't find what you were looking for, try again!</h2>
+      )}
     </Container>
   );
 };

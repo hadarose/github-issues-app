@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import GithubIcon from "mdi-react/GithubIcon";
 import { APP_CLIENT_ID } from "../shared/client-id";
 

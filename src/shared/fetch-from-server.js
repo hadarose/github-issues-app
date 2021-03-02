@@ -1,13 +1,20 @@
 import axios from "axios";
 
-exports.getToken = (userLoginCode) =>
+export const getToken = (userLoginCode) =>
   axios.get("http://localhost:8000/authenticate/" + userLoginCode);
 
-exports.getRepositories = (token) => {
-  return axios.get("https://api.github.com/user/repos", {
+export const getRepositories = (token) =>
+  axios.get("https://api.github.com/user/repos", {
     headers: {
       Authorization: "token " + token,
       Accept: "application/vnd.github.v3+json",
     },
   });
-};
+
+export const getIssues = (owner, repoName) =>
+  axios.get(
+    "https://api.github.com/repos/" + owner + "/" + repoName + "/issues",
+    {
+      headers: { Accept: "application/vnd.github.v3+json" },
+    }
+  );
