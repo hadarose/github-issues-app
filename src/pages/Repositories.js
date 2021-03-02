@@ -9,39 +9,17 @@ import {
 } from "../shared/styles";
 
 const Repositories = () => {
-  const [token] = useState(localStorage.getItem("token"));
-  const [repositories, setRepositories] = useState([
-    {
-      id: 1,
-      name: "repository-no-1",
-      owner: "",
-    },
-    {
-      id: 2,
-      name: "repository-no-2",
-      owner: "",
-    },
-    {
-      id: 3,
-      name: "repository-no-3",
-      owner: "",
-    },
-  ]);
+  const token = localStorage.getItem("token");
+  const [repositories, setRepositories] = useState([]);
 
   const [displayedRepos, setDisplayedRepos] = useState(repositories);
 
   useEffect(() => {
-    if (token === null) {
-      return;
-    }
-    getRepositories(token).then((data) => setRepositories(data.data));
+    getRepositories(token).then((data) => {
+      setRepositories(data.data);
+      setDisplayedRepos(data.data);
+    });
   }, [token]);
-
-  useEffect(() => {
-    if (repositories) {
-      setDisplayedRepos(repositories);
-    }
-  }, [repositories]);
 
   const filterReposByRepoName = (repoName) => {
     const filteredResults = repositories.filter((repo) =>
