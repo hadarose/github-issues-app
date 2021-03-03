@@ -1,7 +1,21 @@
-import { Wrapper } from "../shared/styles";
+import {
+  BlueCircle,
+  Footer,
+  LanguageItem,
+  RepoFooter,
+  Wrapper,
+  YellowCircle,
+} from "../shared/styles";
 
-const Issue = ({ name }) => {
-  return <Wrapper>{name}</Wrapper>;
+const Issue = ({ name, opened, user }) => {
+  return (
+    <Wrapper>
+      <h2>{name}</h2>
+      <div>
+        <i>Opened on </i> {opened} by {user}
+      </div>
+    </Wrapper>
+  );
 };
 
 export default Issue;

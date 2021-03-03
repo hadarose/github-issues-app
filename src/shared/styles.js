@@ -36,6 +36,9 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  &:hover {
+    background-color: #d1d5da;
+  }
 `;
 
 export const NavLink = styled(Link)`
@@ -46,4 +49,53 @@ export const NavLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const MainHeadline = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+export const LogOut = styled.button``;
+
+export const RepoFooter = styled.div`
+  display: flex;
+  flex-firection: column;
+  justify-content: space-between;
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  flex-firection: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const LanguageItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100px;
+  margin-right: 10px;
+`;
+export const Circle = styled.div`
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+`;
+
+export const YellowCircle = styled(Circle)`
+  background-color: #f1e05a;
+`;
+
+export const BlueCircle = styled(Circle)`
+  background-color: #2b7489;
 `;

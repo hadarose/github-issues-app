@@ -1,12 +1,8 @@
 import Repository from "./Repository";
 import { useState, useEffect } from "react";
 import { getRepositories } from "../shared/fetch-from-server";
-import {
-  Container,
-  SearchContainer,
-  SearchBox,
-  AddNewButton,
-} from "../shared/styles";
+import Search from "../shared/Search";
+import { Container } from "../shared/styles";
 
 const Repositories = () => {
   const token = localStorage.getItem("token");
@@ -32,13 +28,11 @@ const Repositories = () => {
   return (
     <Container>
       <h2>Git Repositories</h2>
-      <SearchContainer>
-        <SearchBox
-          defaultValue="find a repository..."
-          onChange={({ target }) => filterReposByRepoName(target.value)}
-        />
-        <AddNewButton>new</AddNewButton>
-      </SearchContainer>
+
+      <Search
+        placeholder="find a repository..."
+        onSearch={filterReposByRepoName}
+      />
 
       {displayedRepos.length > 0 ? (
         <div>
@@ -47,6 +41,9 @@ const Repositories = () => {
               key={repo.id}
               name={repo.name}
               owner={repo.owner.login}
+              description={repo.description}
+              language={repo.language}
+              updated={repo.updated_at.substr(0, 10)}
             />
           ))}
         </div>

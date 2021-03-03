@@ -2,32 +2,23 @@ import Issue from "./Issue";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getIssues } from "../shared/fetch-from-server";
-import {
-  Container,
-  SearchBox,
-  SearchContainer,
-  AddNewButton,
-} from "../shared/styles";
+import Search from "../shared/Search";
+import { Container } from "../shared/styles";
 
 const Issues = () => {
   const { name, owner } = useParams();
 
-  const [issues, setIssues] = useState([
-    { id: 1, title: "issue-no-1" },
-    { id: 2, title: "issue-no-2" },
-  ]);
+  const [issues, setIssues] = useState([]);
 
   const [displayedIssues, setDisplayedIssues] = useState(issues);
 
   useEffect(() => {
-    getIssues(owner, name).then((data) => setIssues(data.data));
+    getIssues(owner, name).then((data) => {
+      console.log("issues are ", data);
+      setIssues(data.data);
+      setDisplayedIssues(data.data);
+    });
   }, []);
-
-  useEffect(() => {
-    if (issues) {
-      setDisplayedIssues(issues);
-    }
-  }, [issues]);
 
   const filterIssuesByIssueName = (issueName) => {
     const filteredResults = issues.filter((issue) =>
@@ -40,18 +31,20 @@ const Issues = () => {
   return (
     <Container>
       <h2>Issues</h2>
-      <SearchContainer>
-        <SearchBox
-          defaultValue="find an issue..."
-          onChange={({ target }) => filterIssuesByIssueName(target.value)}
-        />
-        <AddNewButton>new</AddNewButton>
-      </SearchContainer>
+      <Search
+        placeholder="find an issue..."
+        onSearch={filterIssuesByIssueName}
+      />
 
       {displayedIssues.length > 0 ? (
         <div>
           {displayedIssues.map((issue) => (
-            <Issue key={issue.id} name={issue.title} />
+            <Issue
+              key={issue.id}
+              name={issue.title}
+              opened={issue.created_at.substr(0, 10)}
+              user={issue.user.login}
+            />
           ))}
         </div>
       ) : (

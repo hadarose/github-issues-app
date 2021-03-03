@@ -1,34 +1,24 @@
 import { getToken } from "../shared/fetch-from-server";
-import { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const CompleteGitHubAuth = () => {
   const userLoginCode = window.location.href.split("=")[1];
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const history = useHistory();
 
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.push("/repositories");
+      return;
+    }
+
     getToken(userLoginCode).then((data) => {
       localStorage.setItem("token", data.data.token);
-      setToken(data.data.token);
+      history.push("/repositories");
     });
-  }, [userLoginCode]);
+  }, [history, userLoginCode]);
 
-  return <div>{!token ? "loading" : <Redirect to="/repositories" />}</div>;
+  return <div>Loading...</div>;
 };
 
 export default CompleteGitHubAuth;
-
-// const userLoginCode = window.location.href.split("=")[1];
-// const history = useHistory();
-//
-// useEffect(() => {
-//   getToken(userLoginCode).then((data) => {
-//     localStorage.setItem("token", data.data.token);
-//     history.push("/repositories");
-//   });
-// }, [history, userLoginCode]);
-//
-// return <div>loading</div>;
-// };
-//
-// export default CompleteGitHubAuth;
