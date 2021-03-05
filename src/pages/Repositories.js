@@ -2,20 +2,26 @@ import Repository from "./Repository";
 import { useState, useEffect } from "react";
 import { getRepositories } from "../shared/fetch-from-server";
 import Search from "../shared/Search";
+import { useHistory } from "react-router-dom";
 import { Container } from "../shared/styles";
 
-const Repositories = () => {
+const Repositories = ({ setUser }) => {
+  const history = useHistory();
   const token = localStorage.getItem("token");
   const [repositories, setRepositories] = useState([]);
-
   const [displayedRepos, setDisplayedRepos] = useState(repositories);
 
   useEffect(() => {
-    getRepositories(token).then((data) => {
-      setRepositories(data.data);
-      setDisplayedRepos(data.data);
-    });
-  }, [token]);
+    getRepositories(token)
+      .then((data) => {
+        setRepositories(data.data);
+        setDisplayedRepos(data.data);
+        setUser();
+      })
+      .catch(() => {
+        history.push("/");
+      });
+  }, [history, token]);
 
   const filterReposByRepoName = (repoName) => {
     const filteredResults = repositories.filter((repo) =>

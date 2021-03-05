@@ -1,11 +1,4 @@
-import {
-  BlueCircle,
-  Footer,
-  LanguageItem,
-  RepoFooter,
-  Wrapper,
-  YellowCircle,
-} from "../shared/styles";
+import { Wrapper } from "../shared/styles";
 
 const Issue = ({ name, opened, user }) => {
   return (

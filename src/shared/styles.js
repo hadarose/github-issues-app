@@ -21,13 +21,6 @@ export const SearchBox = styled.input`
   padding: 20px;
 `;
 
-export const AddNewButton = styled.button`
-  background-color: green;
-  color: white;
-  min-width: 75px;
-  font-size: medium;
-`;
-
 export const Wrapper = styled.div`
   margin: 5px;
   padding: 5px;
@@ -62,7 +55,6 @@ export const MainHeadline = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const LogOut = styled.button``;
 
 export const RepoFooter = styled.div`
   display: flex;

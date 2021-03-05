@@ -7,18 +7,15 @@ import { Container } from "../shared/styles";
 
 const Issues = () => {
   const { name, owner } = useParams();
-
   const [issues, setIssues] = useState([]);
-
   const [displayedIssues, setDisplayedIssues] = useState(issues);
 
   useEffect(() => {
     getIssues(owner, name).then((data) => {
-      console.log("issues are ", data);
       setIssues(data.data);
       setDisplayedIssues(data.data);
     });
-  }, []);
+  }, [name, owner]);
 
   const filterIssuesByIssueName = (issueName) => {
     const filteredResults = issues.filter((issue) =>

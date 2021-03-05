@@ -12,6 +12,7 @@ import {
 
 const Repository = ({ name, owner, description, language, updated }) => {
   const [displayIssues, setDisplayIssues] = useState(false);
+
   return (
     <Wrapper>
       <NavLink to={`/repositories/${name}`}>{name}</NavLink>
@@ -28,7 +29,7 @@ const Repository = ({ name, owner, description, language, updated }) => {
             </LanguageItem>
             <BlueCircle />
             <div>
-              <i>Last updated: </i> {updated}
+              <i>Last updated: {updated}</i>
             </div>
           </Footer>
 
