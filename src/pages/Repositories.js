@@ -16,7 +16,6 @@ const Repositories = ({ setUser }) => {
       .then((data) => {
         setRepositories(data.data);
         setDisplayedRepos(data.data);
-        setUser();
       })
       .catch(() => {
         history.push("/");

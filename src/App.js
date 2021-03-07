@@ -7,6 +7,7 @@ import Description from "./pages/Description";
 import { MainHeadline } from "./shared/styles";
 import GithubIcon from "mdi-react/GithubIcon";
 import { APP_CLIENT_ID } from "./shared/client-id";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
   const [isUser, setIsUser] = useState(Boolean(localStorage.getItem("token")));
@@ -16,6 +17,10 @@ function App() {
       `https://github.com/login/oauth/authorize?client_id=${APP_CLIENT_ID}`
     );
   };
+
+  // if (isUser) {
+  //   window.location.assign("/repositories");
+  // }
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -39,13 +44,13 @@ function App() {
           <button onClick={login}>Login</button>
         )}
         <Switch>
-          <Route exact path="/" />
-          <Route path="/code" component={CompleteGitHubAuth} />
+          <PrivateRoute exact path="/" isUser={isUser} />
+          <Route path="/code">
+            <CompleteGitHubAuth setUser={setUser} />
+          </Route>
           <Route path="/repositories/:owner/:name/issues" component={Issues} />
           <Route path="/repositories/:name" component={Description} />
-          <Route path="/repositories">
-            <Repositories setUser={setUser} />
-          </Route>
+          <PrivateRoute path="/repositories" isUser={isUser} />
         </Switch>
       </div>
     </BrowserRouter>

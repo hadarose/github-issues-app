@@ -2,7 +2,7 @@ import { getToken } from "../shared/fetch-from-server";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-const CompleteGitHubAuth = () => {
+const CompleteGitHubAuth = ({ setUser }) => {
   const userLoginCode = window.location.href.split("=")[1];
   const history = useHistory();
 
@@ -14,6 +14,7 @@ const CompleteGitHubAuth = () => {
 
     getToken(userLoginCode).then((data) => {
       localStorage.setItem("token", data.data.token);
+      setUser();
       history.push("/repositories");
     });
   }, [history, userLoginCode]);
