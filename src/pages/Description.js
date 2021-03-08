@@ -15,7 +15,7 @@ const DescriptionWrapper = styled.div`
 
 const Description = () => {
   const { name } = useParams();
-  return <DescriptionWrapper>{name}'s Description</DescriptionWrapper>;
+  return <DescriptionWrapper>{name}</DescriptionWrapper>;
 };
 
 export default Description;

@@ -18,6 +18,7 @@ const Repository = ({ name, owner, description, language, updated }) => {
       <NavLink to={`/repositories/${name}`}>{name}</NavLink>
       <div>
         <p>{description ? description : "No description available"}</p>
+
         {displayIssues && (
           <Redirect to={`/repositories/${owner}/${name}/issues`} />
         )}

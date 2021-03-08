@@ -1,11 +1,11 @@
-import Repository from "./Repository";
 import { useState, useEffect } from "react";
 import { getRepositories } from "../shared/fetch-from-server";
-import Search from "../shared/Search";
 import { useHistory } from "react-router-dom";
+import Repository from "./Repository";
+import Search from "../shared/Search";
 import { Container } from "../shared/styles";
 
-const Repositories = ({ setUser }) => {
+const Repositories = () => {
   const history = useHistory();
   const token = localStorage.getItem("token");
   const [repositories, setRepositories] = useState([]);

@@ -44,14 +44,9 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 export const MainHeadline = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

@@ -1,8 +1,8 @@
-import Issue from "./Issue";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getIssues } from "../shared/fetch-from-server";
 import Search from "../shared/Search";
+import Issue from "./Issue";
 import { Container } from "../shared/styles";
 
 const Issues = () => {
