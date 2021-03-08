@@ -17,8 +17,9 @@ const Repositories = () => {
         setRepositories(data.data);
         setDisplayedRepos(data.data);
       })
-      .catch(() => {
-        history.push("/");
+      .catch((e) => {
+        console.log("error is ", e);
+        // history.push("/");
       });
   }, [history, token]);
 

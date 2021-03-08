@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import CompleteGitHubAuth from "./pages/CompleteGitHubAuth";
 import Repositories from "./pages/Repositories";
@@ -22,9 +22,9 @@ function App() {
     window.location.assign("/");
   };
 
-  const setUser = () => {
+  const setUser = useCallback(() => {
     setIsUser(!isUser);
-  };
+  }, [isUser]);
 
   return (
     <BrowserRouter>
@@ -38,20 +38,14 @@ function App() {
         )}
       </MainHeadline>
 
-      {isUser ? (
-        <Switch>
-          <Route path="/repositories/:owner/:name/issues" component={Issues} />
-          <Route path="/repositories/:name" component={Description} />
-          <Route path="/repositories" component={Repositories} />
-          <Route path="/" component={Repositories} />
-        </Switch>
-      ) : (
-        <Switch>
-          <Route path="/code">
-            <CompleteGitHubAuth setUser={setUser} />
-          </Route>
-        </Switch>
-      )}
+      <Switch>
+        <Route path="/repositories/:owner/:name/issues" component={Issues} />
+        <Route path="/repositories/:name" component={Description} />
+        <Route path="/repositories" component={Repositories} />
+        <Route path="/code">
+          <CompleteGitHubAuth setUser={setUser} />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 }
